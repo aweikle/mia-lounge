@@ -1,0 +1,162 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Slideshow from "../components/Slideshow.astro";
+import { site } from "../data/site";
+
+// Placeholder SVGs are .svg today; swap to .jpg/.webp once Tenille's photos
+// are dropped into /public/images/slideshow/ (see README in that folder).
+const heroSlides = [
+  { src: "/images/slideshow/slide-01.svg", alt: "A celebration moment captured in our photo booth" },
+  { src: "/images/slideshow/slide-02.svg", alt: "Friends posing with glamorous props" },
+  { src: "/images/slideshow/slide-03.svg", alt: "Wedding guests sharing a candid laugh" },
+  { src: "/images/slideshow/slide-04.svg", alt: "Elegant photo booth setup at an evening event" },
+  { src: "/images/slideshow/slide-05.svg", alt: "Birthday party guests enjoying the booth" },
+];
+
+const features = [
+  {
+    title: "Boutique Backdrops",
+    body: "Hand-curated backdrops in rose gold, florals, and black-tie finishes — designed to match the elegance of your event.",
+    icon: "✦",
+  },
+  {
+    title: "Instant Sharing",
+    body: "Guests get high-resolution photos, GIFs, and boomerangs sent to their phones the moment they step out of the booth.",
+    icon: "✦",
+  },
+  {
+    title: "Curated Prop Styling",
+    body: "We bring a styled prop selection — never tacky, always tasteful — refreshed for every event we host.",
+    icon: "✦",
+  },
+  {
+    title: "On-Site Attendant",
+    body: "A friendly, polished attendant runs the booth from start to finish, so you can stay in the moment.",
+    icon: "✦",
+  },
+];
+
+const occasions = [
+  "Weddings",
+  "Birthdays",
+  "Corporate",
+  "Galas",
+  "Showers",
+  "Sweet 16s",
+  "Reunions",
+  "Brand Activations",
+];
+---
+
+<Layout>
+  <!-- HERO -->
+  <section class="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+    <Slideshow slides={heroSlides} />
+
+    <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-6">{site.tagline}</p>
+      <h1 class="font-script rose-gradient-text text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.9]" style="font-family: var(--font-script)">
+        {site.brand}
+      </h1>
+      <div class="glow-divider my-10"></div>
+      <p class="max-w-2xl mx-auto text-lg sm:text-xl text-cream-dim leading-relaxed">
+        Glow, glamour, and unforgettable moments — captured beautifully.
+        Boutique photo booth experiences for every kind of celebration in {site.serviceArea}.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/booking" class="btn-primary">Reserve Your Date</a>
+        <a href="/past-events" class="btn-ghost">See Past Events</a>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 text-rose-300/70 text-[10px] tracking-[0.4em] uppercase">
+      Scroll
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="relative py-24 sparkle-bg">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-4">Welcome</p>
+      <h2 class="text-4xl sm:text-5xl rose-gradient-text leading-tight mb-6">
+        Where every flash<br/>tells a story
+      </h2>
+      <div class="glow-divider mb-8"></div>
+      <p class="text-lg text-cream-dim leading-relaxed">
+        Founded in {site.city} by {site.founder.name}, {site.brand} is a boutique
+        photo booth studio built on a simple belief: the best parts of any
+        celebration deserve to be remembered. We design booth experiences that
+        feel like part of the décor — never a sideshow — and we treat your
+        guests like the VIPs they are.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED -->
+  <section class="relative py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="section-eyebrow mb-3">The Experience</p>
+        <h2 class="text-4xl sm:text-5xl rose-gradient-text">What's Included</h2>
+        <div class="glow-divider mt-6"></div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {features.map((f) => (
+          <div class="card p-8 text-center">
+            <div class="text-rose-300 text-2xl mb-4">{f.icon}</div>
+            <h3 class="text-xl text-cream mb-3">{f.title}</h3>
+            <p class="text-cream-dim text-sm leading-relaxed">{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- OCCASIONS -->
+  <section class="relative py-24 bg-ink-soft">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-3">Occasions</p>
+      <h2 class="text-4xl sm:text-5xl rose-gradient-text mb-6">Every Kind of Celebration</h2>
+      <div class="glow-divider mb-12"></div>
+      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        {occasions.map((occ) => (
+          <span
+            class="px-5 py-2.5 rounded-full border border-rose-500/40 text-sm tracking-wider text-cream uppercase hover:border-rose-300 hover:text-rose-200 transition"
+            style="font-family: var(--font-display)"
+          >
+            {occ}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY TEASE -->
+  <section class="relative py-24 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-rose-800/20 via-transparent to-rose-500/10"></div>
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-3">Beyond the Booth</p>
+      <h2 class="text-4xl sm:text-5xl rose-gradient-text mb-6">Lifting Up Future Nurses</h2>
+      <div class="glow-divider mb-8"></div>
+      <p class="text-lg text-cream-dim leading-relaxed mb-8">
+        A portion of every booking goes directly to supporting Baltimore-area
+        nursing students and the programs that train them. When you celebrate
+        with us, you're helping someone else begin a life of caring for others.
+      </p>
+      <a href="/community" class="btn-ghost">Learn More</a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative py-24">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-4xl sm:text-5xl rose-gradient-text mb-6">Let's Make It Unforgettable</h2>
+      <p class="text-cream-dim text-lg mb-10 max-w-xl mx-auto">
+        Tell us about your event and we'll put together a custom quote within 24 hours.
+      </p>
+      <a href="/booking" class="btn-primary">Start Your Booking</a>
+    </div>
+  </section>
+</Layout>

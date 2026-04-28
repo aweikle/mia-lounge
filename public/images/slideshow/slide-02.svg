@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bg" cx="70%" cy="40%" r="85%">
+      <stop offset="0%" stop-color="#3a1d28"/>
+      <stop offset="55%" stop-color="#15090d"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="rose" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#efbbb0"/>
+      <stop offset="100%" stop-color="#9a5763"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g opacity="0.4"><circle cx="1600" cy="280" r="200" fill="url(#rose)" opacity="0.18"/><circle cx="380" cy="780" r="260" fill="#b76e79" opacity="0.14"/></g>
+  <g transform="translate(960 540)" text-anchor="middle">
+    <text font-family="Georgia, serif" font-style="italic" font-size="180" fill="url(#rose)">Glamour</text>
+    <text y="80" font-family="Georgia, serif" font-size="22" fill="#c9bfb6" letter-spacing="10">SLIDE 02</text>
+  </g>
+</svg>

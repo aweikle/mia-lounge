@@ -1,0 +1,88 @@
+---
+import { site } from "../data/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="relative mt-24 border-t border-ink-line bg-ink-soft">
+  <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-rose-500 to-transparent"></div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid gap-12 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <div class="font-script text-4xl rose-gradient-text mb-3" style="font-family: var(--font-script)">
+        {site.brand}
+      </div>
+      <p class="text-cream-dim max-w-md leading-relaxed">
+        {site.tagline}. Proudly serving {site.serviceArea} — bringing glow,
+        glamour, and unforgettable moments to every event we touch.
+      </p>
+      <p class="text-rose-300/80 text-xs uppercase tracking-[0.3em] mt-6" style="font-family: var(--font-display)">
+        A {site.parentBrand} experience
+      </p>
+    </div>
+
+    <div>
+      <h3 class="text-rose-300 text-xs uppercase tracking-[0.3em] mb-4">Explore</h3>
+      <ul class="space-y-3">
+        {site.navigation.map((item) => (
+          <li>
+            <a href={item.href} class="text-cream-dim hover:text-rose-200 transition text-sm">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-rose-300 text-xs uppercase tracking-[0.3em] mb-4">Get In Touch</h3>
+      <ul class="space-y-3 text-sm">
+        <li>
+          <a href={`mailto:${site.contact.email}`} class="text-cream-dim hover:text-rose-200 transition">
+            {site.contact.email}
+          </a>
+        </li>
+        <li>
+          <a href={`tel:${site.contact.phone.replace(/\D/g, "")}`} class="text-cream-dim hover:text-rose-200 transition">
+            {site.contact.phone}
+          </a>
+        </li>
+        <li class="text-cream-dim">{site.city}</li>
+      </ul>
+      <div class="flex items-center gap-4 mt-5">
+        <a
+          href={`https://instagram.com/${site.contact.instagram}`}
+          aria-label="Instagram"
+          class="text-rose-300 hover:text-rose-100 transition"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"></circle>
+          </svg>
+        </a>
+        <a
+          href={`https://tiktok.com/@${site.contact.tiktok}`}
+          aria-label="TikTok"
+          class="text-rose-300 hover:text-rose-100 transition"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16.5 3a5 5 0 0 0 4.5 4.5v3a8 8 0 0 1-4.5-1.4v6.4a6 6 0 1 1-6-6c.34 0 .67.03 1 .09v3.16a3 3 0 1 0 2 2.83V3h3z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-ink-line">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-cream-dim/70">
+      <div>© {year} {site.parentBrand}. All rights reserved.</div>
+      <div class="uppercase tracking-[0.3em]" style="font-family: var(--font-display)">
+        Made with love in Baltimore
+      </div>
+    </div>
+  </div>
+</footer>

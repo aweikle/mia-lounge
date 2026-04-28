@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="g1" cx="30%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#3a1f29"/>
+      <stop offset="50%" stop-color="#15090d"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="80%" cy="70%" r="60%">
+      <stop offset="0%" stop-color="#b76e79" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#b76e79" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rose" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7d9d2"/>
+      <stop offset="50%" stop-color="#e8a394"/>
+      <stop offset="100%" stop-color="#b76e79"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g1)"/>
+  <rect width="1600" height="900" fill="url(#g2)"/>
+  <g opacity="0.18">
+    <circle cx="280" cy="220" r="2" fill="#f7d9d2"/>
+    <circle cx="540" cy="160" r="1.5" fill="#f7d9d2"/>
+    <circle cx="900" cy="280" r="2" fill="#f7d9d2"/>
+    <circle cx="1240" cy="180" r="1.5" fill="#f7d9d2"/>
+    <circle cx="1380" cy="320" r="2" fill="#f7d9d2"/>
+    <circle cx="200" cy="640" r="1.5" fill="#f7d9d2"/>
+    <circle cx="600" cy="720" r="2" fill="#f7d9d2"/>
+    <circle cx="1040" cy="680" r="1.5" fill="#f7d9d2"/>
+    <circle cx="1320" cy="760" r="2" fill="#f7d9d2"/>
+  </g>
+  <g transform="translate(800 420)" text-anchor="middle">
+    <text font-family="Georgia, serif" font-style="italic" font-size="96" fill="url(#rose)" font-weight="400">Mia Snap Lounge</text>
+    <text y="80" font-family="Georgia, serif" font-size="22" fill="#c9bfb6" letter-spacing="8">PHOTO PLACEHOLDER</text>
+  </g>
+</svg>

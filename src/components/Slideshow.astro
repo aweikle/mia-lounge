@@ -1,0 +1,96 @@
+---
+interface Slide {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+interface Props {
+  slides: Slide[];
+  /** ms between auto-advance. Default 5500. */
+  interval?: number;
+}
+
+const { slides, interval = 5500 } = Astro.props;
+---
+
+<div
+  class="slideshow-root absolute inset-0 overflow-hidden"
+  data-interval={interval}
+>
+  {slides.map((slide, i) => (
+    <div
+      class:list={["slide absolute inset-0 transition-opacity duration-1000 ease-in-out", i === 0 ? "opacity-100" : "opacity-0"]}
+      data-index={i}
+    >
+      <img
+        src={slide.src}
+        alt={slide.alt}
+        class="w-full h-full object-cover"
+        loading={i === 0 ? "eager" : "lazy"}
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/55 to-black/85"></div>
+    </div>
+  ))}
+</div>
+
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+  {slides.map((_, i) => (
+    <button
+      class:list={["slide-dot h-1.5 w-8 rounded-full transition-all", i === 0 ? "bg-rose-300 w-12" : "bg-cream/40 hover:bg-cream/70"]}
+      data-target={i}
+      aria-label={`Go to slide ${i + 1}`}
+    ></button>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".slideshow-root").forEach((root) => {
+    const slides = root.querySelectorAll<HTMLElement>(".slide");
+    const dotsContainer = root.parentElement?.querySelector(".slide-dot")?.parentElement;
+    const dots = dotsContainer?.querySelectorAll<HTMLElement>(".slide-dot") ?? [];
+    if (slides.length <= 1) return;
+
+    const interval = Number(root.dataset.interval ?? 5500);
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+
+    const show = (next: number) => {
+      slides[current].classList.replace("opacity-100", "opacity-0");
+      dots[current]?.classList.remove("bg-rose-300", "w-12");
+      dots[current]?.classList.add("bg-cream/40", "hover:bg-cream/70");
+
+      current = (next + slides.length) % slides.length;
+
+      slides[current].classList.replace("opacity-0", "opacity-100");
+      dots[current]?.classList.add("bg-rose-300", "w-12");
+      dots[current]?.classList.remove("bg-cream/40", "hover:bg-cream/70");
+    };
+
+    const start = () => {
+      timer = setInterval(() => show(current + 1), interval);
+    };
+    const stop = () => {
+      if (timer) clearInterval(timer);
+      timer = null;
+    };
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        const target = Number(dot.dataset.target ?? 0);
+        show(target);
+        stop();
+        start();
+      });
+    });
+
+    // Pause on hover/focus for accessibility.
+    root.parentElement?.addEventListener("mouseenter", stop);
+    root.parentElement?.addEventListener("mouseleave", start);
+
+    // Respect reduced-motion preference.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    start();
+  });
+</script>

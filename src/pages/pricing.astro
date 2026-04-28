@@ -1,0 +1,147 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { packages, addOns } from "../data/pricing";
+---
+
+<Layout title="Pricing" description="Boutique photo booth packages from Mia Snap Lounge — designed for weddings, parties, and corporate events in Baltimore and the DMV.">
+  <!-- HEADER -->
+  <section class="relative pt-40 pb-16 sparkle-bg">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-4">Investment</p>
+      <h1 class="font-script rose-gradient-text text-6xl sm:text-7xl md:text-8xl mb-6" style="font-family: var(--font-script)">
+        Pricing
+      </h1>
+      <div class="glow-divider mb-8"></div>
+      <p class="text-lg text-cream-dim leading-relaxed max-w-2xl mx-auto">
+        Three thoughtfully designed packages — each one delivering the
+        full Mia Snap Lounge experience. Custom builds always available
+        for the truly extraordinary.
+      </p>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-3 gap-8">
+        {packages.map((pkg) => (
+          <div class:list={[
+            "relative card p-8 flex flex-col",
+            pkg.popular && "rose-border ring-1 ring-rose-500/30"
+          ]}>
+            {pkg.popular && (
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rose-gradient-bg text-ink text-[10px] tracking-[0.3em] uppercase rounded-full" style="font-family: var(--font-display)">
+                Most Loved
+              </div>
+            )}
+
+            <div class="text-center mb-8">
+              <h2 class="text-3xl rose-gradient-text mb-2">{pkg.name}</h2>
+              <p class="text-cream-dim text-sm italic mb-6">{pkg.tagline}</p>
+              <div class="flex items-baseline justify-center gap-1 mb-2">
+                <span class="text-5xl font-light text-cream">${pkg.price}</span>
+              </div>
+              <p class="text-rose-300 text-xs uppercase tracking-[0.3em]" style="font-family: var(--font-display)">
+                {pkg.duration}
+              </p>
+            </div>
+
+            <div class="h-px bg-gradient-to-r from-transparent via-rose-500/40 to-transparent mb-6"></div>
+
+            <ul class="space-y-3 flex-1 mb-8">
+              {pkg.features.map((feat) => (
+                <li class="flex items-start gap-3 text-sm text-cream-dim">
+                  <svg class="w-4 h-4 text-rose-300 mt-0.5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-7 7a1 1 0 01-1.4 0l-3-3a1 1 0 111.4-1.4L9 11.6l6.3-6.3a1 1 0 011.4 0z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>{feat}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a href="/booking" class:list={[pkg.popular ? "btn-primary" : "btn-ghost", "w-full"]}>
+              Book {pkg.name}
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ADD-ONS -->
+  <section class="py-20 bg-ink-soft">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="section-eyebrow mb-3">Customize</p>
+        <h2 class="text-4xl sm:text-5xl rose-gradient-text mb-4">Optional Add-Ons</h2>
+        <div class="glow-divider"></div>
+      </div>
+
+      <div class="card p-8 lg:p-10">
+        <div class="grid sm:grid-cols-2 gap-x-12 gap-y-5">
+          {addOns.map((item) => (
+            <div class="flex items-center justify-between border-b border-ink-line pb-4">
+              <span class="text-cream">{item.name}</span>
+              <span class="text-rose-300 font-medium" style="font-family: var(--font-display)">
+                {typeof item.price === "number" ? `$${item.price}` : item.price}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-20">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="section-eyebrow mb-3">Good to Know</p>
+        <h2 class="text-4xl sm:text-5xl rose-gradient-text mb-4">Common Questions</h2>
+        <div class="glow-divider"></div>
+      </div>
+
+      <div class="space-y-4">
+        {[
+          {
+            q: "How far in advance should I book?",
+            a: "We recommend booking 4–8 weeks in advance for weekend events, and 8–12 weeks for peak wedding season (May–October). For premium dates, the sooner the better — we book up quickly!",
+          },
+          {
+            q: "Do you travel outside of Baltimore?",
+            a: "Yes! We regularly serve Baltimore, DC, Annapolis, and the greater DMV. Travel within 30 miles of downtown Baltimore is included; beyond that, we'll add a transparent travel fee to your quote.",
+          },
+          {
+            q: "What does setup look like?",
+            a: "We arrive 60–90 minutes before your event start time to set up — fully on us, not on your event clock. Setup typically requires an 8'×8' area near a standard outlet.",
+          },
+          {
+            q: "Do you require a deposit?",
+            a: "Yes — a 30% non-refundable retainer secures your date, with the balance due two weeks before the event. We accept all major cards, ACH, and Zelle.",
+          },
+          {
+            q: "Can the booth be customized to our event branding?",
+            a: "Absolutely. Custom photo templates are included in The Marquee and The Couture, and available as an add-on to The Soirée. We'll work with your colors, logos, monograms, or theme.",
+          },
+        ].map((item) => (
+          <details class="card p-6 group">
+            <summary class="flex items-center justify-between cursor-pointer list-none">
+              <h3 class="text-lg text-cream pr-4">{item.q}</h3>
+              <span class="text-rose-300 text-xl transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <p class="text-cream-dim text-sm leading-relaxed mt-4">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-4xl rose-gradient-text mb-6">Ready to make it official?</h2>
+      <p class="text-cream-dim mb-8">Tell us about your event and we'll send a personalized quote within 24 hours.</p>
+      <a href="/booking" class="btn-primary">Reserve Your Date</a>
+    </div>
+  </section>
+</Layout>

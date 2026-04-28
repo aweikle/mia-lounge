@@ -1,0 +1,186 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../data/site";
+import { packages } from "../data/pricing";
+---
+
+<Layout title="Book Your Event" description="Reserve your date with Mia Snap Lounge. Tell us about your event and we'll send a personalized quote within 24 hours.">
+  <section class="relative pt-40 pb-12 sparkle-bg">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-4">Reserve Your Date</p>
+      <h1 class="font-script rose-gradient-text text-6xl sm:text-7xl md:text-8xl mb-6" style="font-family: var(--font-script)">
+        Book Now
+      </h1>
+      <div class="glow-divider mb-8"></div>
+      <p class="text-lg text-cream-dim leading-relaxed max-w-2xl mx-auto">
+        Tell us a little about your event. We'll reach out within 24 hours
+        with availability and a personalized quote — usually faster.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-12 pb-24">
+    <div class="max-w-3xl mx-auto px-6">
+      <!--
+        Netlify Forms:
+        - `data-netlify="true"` registers the form with Netlify on build.
+        - Honeypot field `bot-field` traps spambots without a CAPTCHA.
+        - Submissions appear under Netlify dashboard → Forms.
+        - To enable email notifications: Netlify dashboard → Forms → Settings → Notifications.
+      -->
+      <form
+        name="booking"
+        method="POST"
+        action="/booking-thanks"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="card p-8 sm:p-10 space-y-6"
+      >
+        <input type="hidden" name="form-name" value="booking" />
+        <p class="hidden">
+          <label>Don't fill this out: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="name" class="block text-xs uppercase tracking-[0.25em] text-rose-300 mb-2" style="font-family: var(--font-display)">Your Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              class="w-full bg-ink border border-ink-line rounded-lg px-4 py-3 text-cream placeholder:text-cream-dim/50 focus:border-rose-400 focus:outline-none transition"
+              placeholder="Jane Doe"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-xs uppercase tracking-[0.25em] text-rose-300 mb-2" style="font-family: var(--font-display)">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              class="w-full bg-ink border border-ink-line rounded-lg px-4 py-3 text-cream placeholder:text-cream-dim/50 focus:border-rose-400 focus:outline-none transition"
+              placeholder="you@example.com"
+            />
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="phone" class="block text-xs uppercase tracking-[0.25em] text-rose-300 mb-2" style="font-family: var(--font-display)">Phone</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              class="w-full bg-ink border border-ink-line rounded-lg px-4 py-3 text-cream placeholder:text-cream-dim/50 focus:border-rose-400 focus:outline-none transition"
+              placeholder="(410) 555-0100"
+            />
+          </div>
+          <div>
+            <label for="event-date" class="block text-xs uppercase tracking-[0.25em] text-rose-300 mb-2" style="font-family: var(--font-display)">Event Date</label>
+            <input
+              id="event-date"
+              name="event-date"
+              type="date"
+              required
+              class="w-full bg-ink border border-ink-line rounded-lg px-4 py-3 text-cream focus:border-rose-400 focus:outline-none transition [color-scheme:dark]"
+            />
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="event-type" class="block text-xs uppercase tracking-[0.25em] text-rose-300 mb-2" style="font-family: var(--font-display)">Event Type</label>
+            <select
+              id="event-type"
+              name="event-type"
+              class="w-full bg-ink border border-ink-line rounded-lg px-4 py-3 text-cream focus:border-rose-400 focus:outline-none transition"
+            >
+              <option value="">Select…</option>
+              <option>Wedding</option>
+              <option>Birthday</option>
+              <option>Corporate</option>
+              <option>Gala / Fundraiser</option>
+              <option>Bridal / Baby Shower</option>
+              <option>Sweet 16 / Quinceañera</option>
+              <option>Reunion</option>
+              <option>Brand Activation</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="package" class="block text-xs uppercase tracking-[0.25em] text-rose-300 mb-2" style="font-family: var(--font-display)">Interested Package</label>
+            <select
+              id="package"
+              name="package"
+              class="w-full bg-ink border border-ink-line rounded-lg px-4 py-3 text-cream focus:border-rose-400 focus:outline-none transition"
+            >
+              <option value="">Not sure yet</option>
+              {packages.map((p) => (
+                <option value={p.name}>{p.name} — ${p.price}</option>
+              ))}
+              <option value="Custom">Custom build</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="venue" class="block text-xs uppercase tracking-[0.25em] text-rose-300 mb-2" style="font-family: var(--font-display)">Venue / Location</label>
+          <input
+            id="venue"
+            name="venue"
+            type="text"
+            class="w-full bg-ink border border-ink-line rounded-lg px-4 py-3 text-cream placeholder:text-cream-dim/50 focus:border-rose-400 focus:outline-none transition"
+            placeholder="The Belvedere, Baltimore MD"
+          />
+        </div>
+
+        <div>
+          <label for="guests" class="block text-xs uppercase tracking-[0.25em] text-rose-300 mb-2" style="font-family: var(--font-display)">Estimated Guest Count</label>
+          <input
+            id="guests"
+            name="guests"
+            type="number"
+            min="1"
+            class="w-full bg-ink border border-ink-line rounded-lg px-4 py-3 text-cream placeholder:text-cream-dim/50 focus:border-rose-400 focus:outline-none transition"
+            placeholder="120"
+          />
+        </div>
+
+        <div>
+          <label for="details" class="block text-xs uppercase tracking-[0.25em] text-rose-300 mb-2" style="font-family: var(--font-display)">Tell us about your event</label>
+          <textarea
+            id="details"
+            name="details"
+            rows="5"
+            class="w-full bg-ink border border-ink-line rounded-lg px-4 py-3 text-cream placeholder:text-cream-dim/50 focus:border-rose-400 focus:outline-none transition resize-none"
+            placeholder="Theme, colors, must-have moments, anything we should know…"
+          ></textarea>
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="btn-primary w-full">Send My Inquiry</button>
+          <p class="text-center text-xs text-cream-dim mt-4">
+            We'll reply within 24 hours. Prefer a phone call?
+            <a href={`tel:${site.contact.phone.replace(/\D/g, "")}`} class="text-rose-300 hover:text-rose-100 underline underline-offset-4">
+              {site.contact.phone}
+            </a>
+          </p>
+        </div>
+      </form>
+
+      <!-- Alt contact -->
+      <div class="mt-12 grid sm:grid-cols-2 gap-4">
+        <a href={`mailto:${site.contact.email}`} class="card p-6 text-center hover:border-rose-400 transition">
+          <p class="text-rose-300 text-xs uppercase tracking-[0.3em] mb-2" style="font-family: var(--font-display)">Email</p>
+          <p class="text-cream">{site.contact.email}</p>
+        </a>
+        <a href={`https://instagram.com/${site.contact.instagram}`} target="_blank" rel="noreferrer" class="card p-6 text-center hover:border-rose-400 transition">
+          <p class="text-rose-300 text-xs uppercase tracking-[0.3em] mb-2" style="font-family: var(--font-display)">DM Us</p>
+          <p class="text-cream">@{site.contact.instagram}</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

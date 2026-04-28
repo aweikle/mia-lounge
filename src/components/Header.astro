@@ -1,0 +1,92 @@
+---
+import { site } from "../data/site";
+
+const { pathname } = Astro.url;
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+---
+
+<header class="absolute top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <img
+        src="/images/logo/logo.svg"
+        alt={`${site.brand} logo`}
+        class="h-12 w-12 rounded-full object-cover ring-1 ring-rose-500/40 group-hover:ring-rose-300 transition"
+      />
+      <div class="hidden sm:block leading-tight">
+        <div class="font-script text-2xl rose-gradient-text" style="font-family: var(--font-script)">
+          {site.brand}
+        </div>
+        <div class="text-[10px] tracking-[0.35em] uppercase text-rose-200/80" style="font-family: var(--font-display)">
+          Photo Booth · Baltimore
+        </div>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      {site.navigation.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            "text-xs uppercase tracking-[0.25em] transition-colors",
+            isActive(item.href)
+              ? "text-rose-300"
+              : "text-cream/80 hover:text-rose-200",
+          ]}
+          style="font-family: var(--font-display)"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <a href="/booking" class="hidden md:inline-flex btn-primary !py-2.5 !px-5 text-[11px]">
+      Book Now
+    </a>
+
+    <button
+      id="mobile-menu-toggle"
+      type="button"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      class="md:hidden text-rose-200 p-2"
+    >
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden bg-ink-soft/95 backdrop-blur-sm border-t border-ink-line"
+  >
+    <nav class="px-6 py-4 flex flex-col gap-4">
+      {site.navigation.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            "text-sm uppercase tracking-[0.25em]",
+            isActive(item.href) ? "text-rose-300" : "text-cream/85",
+          ]}
+          style="font-family: var(--font-display)"
+        >
+          {item.label}
+        </a>
+      ))}
+      <a href="/booking" class="btn-primary mt-2 w-full">Book Now</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("mobile-menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  toggle?.addEventListener("click", () => {
+    const isOpen = menu?.classList.toggle("hidden") === false;
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+</script>

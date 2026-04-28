@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #000000;
+  --color-ink-soft: #0a0a0a;
+  --color-ink-card: #141014;
+  --color-ink-line: #2a2024;
+
+  --color-rose-50: #fdf3f0;
+  --color-rose-100: #f7d9d2;
+  --color-rose-200: #efbbb0;
+  --color-rose-300: #e8a394;
+  --color-rose-400: #d98a78;
+  --color-rose-500: #b76e79;
+  --color-rose-600: #9a5763;
+  --color-rose-700: #7a4350;
+  --color-rose-800: #5a313c;
+
+  --color-cream: #f5efe9;
+  --color-cream-dim: #c9bfb6;
+
+  --font-script: "Allura", "Pinyon Script", "Dancing Script", cursive;
+  --font-display: "Cinzel", "Playfair Display", serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: var(--color-rose-500);
+    color: var(--color-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  .rose-gradient-text {
+    background: linear-gradient(
+      135deg,
+      #f7d9d2 0%,
+      #e8a394 30%,
+      #b76e79 60%,
+      #9a5763 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .rose-gradient-bg {
+    background: linear-gradient(135deg, #b76e79 0%, #9a5763 100%);
+  }
+
+  .rose-border {
+    position: relative;
+    background:
+      linear-gradient(var(--color-ink-card), var(--color-ink-card)) padding-box,
+      linear-gradient(135deg, #e8a394, #b76e79, #5a313c) border-box;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    background: linear-gradient(135deg, #efbbb0 0%, #b76e79 100%);
+    border-radius: 9999px;
+    transition:
+      transform 250ms ease,
+      box-shadow 250ms ease,
+      filter 250ms ease;
+    box-shadow: 0 8px 24px -8px rgba(183, 110, 121, 0.5);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+    box-shadow: 0 12px 28px -8px rgba(183, 110, 121, 0.7);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-rose-200);
+    border: 1px solid var(--color-rose-500);
+    border-radius: 9999px;
+    transition: all 250ms ease;
+  }
+  .btn-ghost:hover {
+    background: var(--color-rose-500);
+    color: var(--color-ink);
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--color-rose-300);
+  }
+
+  .glow-divider {
+    height: 1px;
+    width: 6rem;
+    margin-inline: auto;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-rose-400),
+      transparent
+    );
+  }
+
+  .card {
+    background: var(--color-ink-card);
+    border: 1px solid var(--color-ink-line);
+    border-radius: 1.25rem;
+    transition:
+      border-color 300ms ease,
+      transform 300ms ease;
+  }
+  .card:hover {
+    border-color: var(--color-rose-500);
+    transform: translateY(-2px);
+  }
+
+  .sparkle-bg {
+    background-image:
+      radial-gradient(
+        circle at 20% 20%,
+        rgba(183, 110, 121, 0.18) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 80% 60%,
+        rgba(232, 163, 148, 0.12) 0%,
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 50% 100%,
+        rgba(154, 87, 99, 0.15) 0%,
+        transparent 50%
+      );
+  }
+}

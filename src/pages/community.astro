@@ -1,0 +1,148 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../data/site";
+
+const pillars = [
+  {
+    title: "Scholarship Support",
+    body: "A portion of every booking goes directly to a scholarship fund for Baltimore-area students pursuing a nursing career — to ease the cost of tuition, books, and licensing exams.",
+  },
+  {
+    title: "Program Partnerships",
+    body: "We partner with local nursing programs to underwrite student-led events, pinning ceremonies, and community health initiatives — turning every celebration into a contribution.",
+  },
+  {
+    title: "Community Visibility",
+    body: "We use our platform to spotlight nurses-in-training and the programs that shape them, because the people who care for our city deserve to be celebrated.",
+  },
+];
+
+// PLACEHOLDER stats — replace with real numbers as the program grows.
+const stats = [
+  { value: "10%", label: "of every booking goes to the fund" },
+  { value: "$X,XXX", label: "raised since inception" },
+  { value: "X", label: "students supported" },
+];
+---
+
+<Layout title="Community Involvement" description="A portion of every booking from Mia Snap Lounge supports Baltimore-area nursing students and programs.">
+  <!-- HERO -->
+  <section class="relative pt-40 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-rose-800/30 via-ink to-rose-500/10"></div>
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-4">Beyond the Booth</p>
+      <h1 class="font-script rose-gradient-text text-6xl sm:text-7xl md:text-8xl mb-6" style="font-family: var(--font-script)">
+        Community
+      </h1>
+      <div class="glow-divider mb-8"></div>
+      <p class="text-xl text-cream-dim leading-relaxed max-w-2xl mx-auto">
+        Every celebration we capture helps lift up a future nurse.
+      </p>
+    </div>
+  </section>
+
+  <!-- THE WHY -->
+  <section class="py-20">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="card p-10 lg:p-14">
+        <p class="section-eyebrow mb-4">Our Mission</p>
+        <h2 class="text-3xl sm:text-4xl rose-gradient-text mb-6 leading-tight">
+          Joy in one place,<br/>care in another.
+        </h2>
+        <div class="space-y-5 text-cream-dim leading-relaxed text-lg">
+          <p>
+            {site.brand} was born in {site.city} — a city carried, every single
+            day, by the nurses who answer calls in our hospitals, schools,
+            clinics, and homes. {site.founder.name} built this business with a
+            simple promise: that the joy we bring to celebrations would help
+            fund the people learning to care for our community.
+          </p>
+          <p>
+            A meaningful portion of every booking goes to Baltimore-area nursing
+            students and the programs that train them. When you celebrate with
+            us, your guests aren't just stepping into a beautiful booth — they're
+            stepping into a story that ends with someone, somewhere, getting the
+            care they need.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="py-16 bg-ink-soft">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid sm:grid-cols-3 gap-6">
+        {stats.map((s) => (
+          <div class="card p-8 text-center">
+            <div class="font-script rose-gradient-text text-5xl sm:text-6xl mb-2" style="font-family: var(--font-script)">
+              {s.value}
+            </div>
+            <p class="text-cream-dim text-sm uppercase tracking-[0.2em]" style="font-family: var(--font-display)">
+              {s.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLARS -->
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <p class="section-eyebrow mb-3">How We Give</p>
+        <h2 class="text-4xl sm:text-5xl rose-gradient-text mb-4">Three Ways We Show Up</h2>
+        <div class="glow-divider"></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {pillars.map((p, i) => (
+          <div class="card p-8">
+            <div class="font-script text-rose-300 text-5xl mb-3" style="font-family: var(--font-script)">
+              {String(i + 1).padStart(2, "0")}
+            </div>
+            <h3 class="text-2xl text-cream mb-4">{p.title}</h3>
+            <p class="text-cream-dim leading-relaxed">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS PLACEHOLDER -->
+  <section class="py-20 bg-ink-soft">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-3">Partners</p>
+      <h2 class="text-3xl sm:text-4xl rose-gradient-text mb-6">
+        Working alongside Baltimore's best
+      </h2>
+      <div class="glow-divider mb-8"></div>
+      <p class="text-cream-dim leading-relaxed max-w-2xl mx-auto mb-10">
+        We're actively partnering with nursing programs across the Baltimore
+        area. If you represent a program or scholarship initiative we should
+        know about — or if you'd like to nominate a student — we'd love to hear
+        from you.
+      </p>
+      <a href={`mailto:${site.contact.email}?subject=Community%20Partnership`} class="btn-ghost">
+        Partner With Us
+      </a>
+    </div>
+  </section>
+
+  <!-- HOW BOOKING HELPS -->
+  <section class="py-24">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-4xl rose-gradient-text mb-6">Book a Booth, Back a Nurse</h2>
+      <p class="text-cream-dim text-lg leading-relaxed mb-10">
+        Every event you book with us puts dollars directly into the hands of
+        Baltimore's future caregivers. It's the easiest impact you'll make
+        all year — and your guests will love what they see.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/booking" class="btn-primary">Reserve Your Date</a>
+        <a href="/pricing" class="btn-ghost">See Packages</a>
+      </div>
+    </div>
+  </section>
+</Layout>

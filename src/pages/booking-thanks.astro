@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../data/site";
+---
+
+<Layout title="Thank You">
+  <section class="min-h-[80vh] flex items-center justify-center pt-32 pb-20 sparkle-bg">
+    <div class="max-w-2xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-6">Inquiry Received</p>
+      <h1 class="font-script rose-gradient-text text-6xl sm:text-7xl mb-8" style="font-family: var(--font-script)">
+        Thank You
+      </h1>
+      <div class="glow-divider mb-8"></div>
+      <p class="text-lg text-cream-dim leading-relaxed mb-10">
+        We've got your inquiry and we're already brewing up something beautiful.
+        Expect to hear back from us within 24 hours — usually much faster.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/" class="btn-primary">Back to Home</a>
+        <a href={`https://instagram.com/${site.contact.instagram}`} target="_blank" rel="noreferrer" class="btn-ghost">
+          Follow Along
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
