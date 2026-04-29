@@ -1,9 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { packages, addOns } from "../data/pricing";
+import { packages, addOns, customServices, logistics } from "../data/pricing";
 ---
 
-<Layout title="Pricing" description="Boutique photo booth packages from Mia Snap Lounge — designed for weddings, parties, and corporate events in Baltimore and the DMV.">
+<Layout title="Pricing" description="Boutique photo booth packages from Mia Snap Lounge — designed for weddings, parties, and corporate events in Baltimore and within 50 miles.">
   <!-- HEADER -->
   <section class="relative pt-40 pb-16 sparkle-bg">
     <div class="max-w-4xl mx-auto px-6 text-center">
@@ -38,11 +38,14 @@ import { packages, addOns } from "../data/pricing";
             <div class="text-center mb-8">
               <h2 class="text-3xl rose-gradient-text mb-2">{pkg.name}</h2>
               <p class="text-cream-dim text-sm italic mb-6">{pkg.tagline}</p>
-              <div class="flex items-baseline justify-center gap-1 mb-2">
+              <div class="flex items-baseline justify-center gap-1 mb-3">
                 <span class="text-5xl font-light text-cream">${pkg.price}</span>
               </div>
-              <p class="text-rose-300 text-xs uppercase tracking-[0.3em]" style="font-family: var(--font-display)">
+              <p class="text-rose-300 text-xs uppercase tracking-[0.3em] mb-1" style="font-family: var(--font-display)">
                 {pkg.duration}
+              </p>
+              <p class="text-cream-dim text-xs uppercase tracking-[0.25em]" style="font-family: var(--font-display)">
+                {pkg.guests}
               </p>
             </div>
 
@@ -65,6 +68,11 @@ import { packages, addOns } from "../data/pricing";
           </div>
         ))}
       </div>
+
+      <p class="text-center text-cream-dim text-sm mt-10 max-w-2xl mx-auto">
+        Minimum booking {logistics.minimumBooking}. Travel within 50 miles included —
+        beyond that, we'll add a transparent travel fee to your quote.
+      </p>
     </div>
   </section>
 
@@ -73,7 +81,7 @@ import { packages, addOns } from "../data/pricing";
     <div class="max-w-5xl mx-auto px-6">
       <div class="text-center mb-12">
         <p class="section-eyebrow mb-3">Customize</p>
-        <h2 class="text-4xl sm:text-5xl rose-gradient-text mb-4">Optional Add-Ons</h2>
+        <h2 class="text-4xl sm:text-5xl rose-gradient-text mb-4">Booth Add-Ons</h2>
         <div class="glow-divider"></div>
       </div>
 
@@ -92,8 +100,36 @@ import { packages, addOns } from "../data/pricing";
     </div>
   </section>
 
+  <!-- CUSTOM SERVICES -->
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="section-eyebrow mb-3">Beyond The Booth</p>
+        <h2 class="text-4xl sm:text-5xl rose-gradient-text mb-4">Custom Services</h2>
+        <div class="glow-divider mb-6"></div>
+        <p class="text-cream-dim max-w-2xl mx-auto">
+          The MIA Collective offers full-event styling beyond the photo booth.
+          Bundle any of these with a package or book them on their own.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {customServices.map((svc) => (
+          <div class="card p-6">
+            <h3 class="text-xl text-cream mb-3">{svc.name}</h3>
+            <p class="text-cream-dim text-sm leading-relaxed">{svc.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="/booking" class="btn-ghost">Inquire About Custom Services</a>
+      </div>
+    </div>
+  </section>
+
   <!-- FAQ -->
-  <section class="py-20">
+  <section class="py-20 bg-ink-soft">
     <div class="max-w-3xl mx-auto px-6">
       <div class="text-center mb-12">
         <p class="section-eyebrow mb-3">Good to Know</p>
@@ -105,23 +141,27 @@ import { packages, addOns } from "../data/pricing";
         {[
           {
             q: "How far in advance should I book?",
-            a: "We recommend booking 4–8 weeks in advance for weekend events, and 8–12 weeks for peak wedding season (May–October). For premium dates, the sooner the better — we book up quickly!",
+            a: "We recommend booking 4–8 weeks in advance for weekend events, and 8–12 weeks for peak wedding season (May–October). For premium dates, the sooner the better — we book up quickly.",
           },
           {
             q: "Do you travel outside of Baltimore?",
-            a: "Yes! We regularly serve Baltimore, DC, Annapolis, and the greater DMV. Travel within 30 miles of downtown Baltimore is included; beyond that, we'll add a transparent travel fee to your quote.",
+            a: "Yes — travel up to 50 miles from Baltimore is included with every package. Beyond 50 miles, we'll add a transparent travel fee to your quote.",
           },
           {
             q: "What does setup look like?",
-            a: "We arrive 60–90 minutes before your event start time to set up — fully on us, not on your event clock. Setup typically requires an 8'×8' area near a standard outlet.",
+            a: `We arrive in advance to set up — that time is included in your package, never on your event clock. Setup requires an ${logistics.setupSpace} area. Need power somewhere outdoor or remote? Add the Portable Power option for $20.`,
           },
           {
             q: "Do you require a deposit?",
-            a: "Yes — a 30% non-refundable retainer secures your date, with the balance due two weeks before the event. We accept all major cards, ACH, and Zelle.",
+            a: `Yes — a ${logistics.deposit} secures your date. We accept ${logistics.paymentMethods.join(", ")}. Buy-now-pay-later options through Affirm and Klarna/Afterpay let you spread the balance over time.`,
+          },
+          {
+            q: "What's the minimum booking?",
+            a: `${logistics.minimumBooking}. Most events land between 3 and 4 hours of active booth time, plus setup and breakdown which we handle on our own time.`,
           },
           {
             q: "Can the booth be customized to our event branding?",
-            a: "Absolutely. Custom photo templates are included in The Marquee and The Couture, and available as an add-on to The Soirée. We'll work with your colors, logos, monograms, or theme.",
+            a: "Absolutely. Custom photo overlays come standard. Branded backdrops, monograms, sponsor logos, and full event branding are available as add-ons for any package.",
           },
         ].map((item) => (
           <details class="card p-6 group">

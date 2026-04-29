@@ -1,20 +1,21 @@
 // Centralized site config — edit this file to update brand/contact info site-wide.
-// Anything marked PLACEHOLDER should be replaced before launch.
 
 export const site = {
   brand: "Mia Snap Lounge",
   parentBrand: "The MIA Collective",
   tagline: "Modern Photo Booth Experiences",
+  motto: "Every Story Matters",
   city: "Baltimore, Maryland",
-  serviceArea: "Baltimore, DC, and the greater DMV",
+  serviceArea: "Baltimore and within 50 miles",
+  inceptionDate: "March 12, 2026",
 
-  // PLACEHOLDER contact info — replace with real values
   contact: {
-    email: "hello@miasnaplounge.com",
-    phone: "(410) 555-0100",
-    instagram: "miasnaplounge",
-    facebook: "miasnaplounge",
-    tiktok: "miasnaplounge",
+    email: "themiacollective1@gmail.com",
+    phone: "(443) 806-9547",
+    instagram: "themiacollective",
+    facebookPage: "The MIA Collective LLC",
+    facebookUrl:
+      "https://www.facebook.com/profile.php?q=The+MIA+Collective+LLC",
   },
 
   founder: {

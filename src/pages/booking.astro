@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { site } from "../data/site";
-import { packages } from "../data/pricing";
+import { packages, logistics } from "../data/pricing";
 ---
 
 <Layout title="Book Your Event" description="Reserve your date with Mia Snap Lounge. Tell us about your event and we'll send a personalized quote within 24 hours.">
@@ -120,7 +120,8 @@ import { packages } from "../data/pricing";
               {packages.map((p) => (
                 <option value={p.name}>{p.name} — ${p.price}</option>
               ))}
-              <option value="Custom">Custom build</option>
+              <option value="Custom Services">Custom Services (Tablescapes, Florals, etc.)</option>
+              <option value="Custom Build">Fully custom — let's chat</option>
             </select>
           </div>
         </div>
@@ -170,8 +171,35 @@ import { packages } from "../data/pricing";
         </div>
       </form>
 
+      <!-- Booking logistics -->
+      <div class="mt-12 card p-8">
+        <p class="section-eyebrow text-center mb-6">Good To Know</p>
+        <div class="grid sm:grid-cols-2 gap-x-10 gap-y-5 text-sm">
+          <div>
+            <p class="text-rose-300 text-xs uppercase tracking-[0.25em] mb-1" style="font-family: var(--font-display)">Deposit</p>
+            <p class="text-cream-dim">{logistics.deposit}</p>
+          </div>
+          <div>
+            <p class="text-rose-300 text-xs uppercase tracking-[0.25em] mb-1" style="font-family: var(--font-display)">Minimum Booking</p>
+            <p class="text-cream-dim">{logistics.minimumBooking}</p>
+          </div>
+          <div>
+            <p class="text-rose-300 text-xs uppercase tracking-[0.25em] mb-1" style="font-family: var(--font-display)">Travel</p>
+            <p class="text-cream-dim">{logistics.travelIncluded} included</p>
+          </div>
+          <div>
+            <p class="text-rose-300 text-xs uppercase tracking-[0.25em] mb-1" style="font-family: var(--font-display)">Setup Space</p>
+            <p class="text-cream-dim">{logistics.setupSpace}</p>
+          </div>
+          <div class="sm:col-span-2 pt-2 border-t border-ink-line">
+            <p class="text-rose-300 text-xs uppercase tracking-[0.25em] mb-2" style="font-family: var(--font-display)">Payment Methods</p>
+            <p class="text-cream-dim">{logistics.paymentMethods.join(" · ")}</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Alt contact -->
-      <div class="mt-12 grid sm:grid-cols-2 gap-4">
+      <div class="mt-8 grid sm:grid-cols-2 gap-4">
         <a href={`mailto:${site.contact.email}`} class="card p-6 text-center hover:border-rose-400 transition">
           <p class="text-rose-300 text-xs uppercase tracking-[0.3em] mb-2" style="font-family: var(--font-display)">Email</p>
           <p class="text-cream">{site.contact.email}</p>
