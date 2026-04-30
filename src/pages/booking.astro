@@ -22,24 +22,22 @@ import { packages, logistics } from "../data/pricing";
   <section class="py-12 pb-24">
     <div class="max-w-3xl mx-auto px-6">
       <!--
-        Netlify Forms:
-        - `data-netlify="true"` registers the form with Netlify on build.
-        - Honeypot field `bot-field` traps spambots without a CAPTCHA.
-        - Submissions appear under Netlify dashboard → Forms.
-        - To enable email notifications: Netlify dashboard → Forms → Settings → Notifications.
+        Submissions go to a Google Apps Script web app that appends each
+        inquiry to a Google Sheet and sends Tenille an email notification.
+        The script URL lives in the PUBLIC_BOOKING_FORM_URL env var (set in
+        Netlify → Site settings → Environment variables).
+        See scripts/google-apps-script/README.md for setup steps.
       -->
       <form
+        id="booking-form"
         name="booking"
         method="POST"
-        action="/booking-thanks"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
         class="card p-8 sm:p-10 space-y-6"
       >
-        <input type="hidden" name="form-name" value="booking" />
-        <p class="hidden">
-          <label>Don't fill this out: <input name="bot-field" /></label>
+        <p class="hidden" aria-hidden="true">
+          <label>Leave this field empty: <input name="_honey" tabindex="-1" autocomplete="off" /></label>
         </p>
+        <div id="booking-error" class="hidden text-sm text-rose-200 bg-rose-800/30 border border-rose-500/40 rounded-lg px-4 py-3"></div>
 
         <div class="grid sm:grid-cols-2 gap-5">
           <div>
@@ -212,3 +210,54 @@ import { packages, logistics } from "../data/pricing";
     </div>
   </section>
 </Layout>
+
+<script define:vars={{
+  formUrl: import.meta.env.PUBLIC_BOOKING_FORM_URL ?? "",
+  fallbackEmail: site.contact.email,
+}}>
+  const form = document.getElementById("booking-form");
+  const errorBox = document.getElementById("booking-error");
+  const submitBtn = form?.querySelector('button[type="submit"]');
+
+  function showError(message) {
+    if (!errorBox) return;
+    errorBox.textContent = message;
+    errorBox.classList.remove("hidden");
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!form) return;
+
+    // Honeypot — silently drop spambot submissions.
+    const honey = form.querySelector('[name="_honey"]');
+    if (honey && honey.value) return;
+
+    if (!formUrl) {
+      showError(`Booking form is not configured yet. Please email ${fallbackEmail} and we'll respond right away.`);
+      return;
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending…";
+    }
+    errorBox?.classList.add("hidden");
+
+    try {
+      const body = new URLSearchParams(new FormData(form));
+      // mode:"no-cors" → fire-and-forget. The Apps Script still receives the
+      // POST; we just can't read its response. Apps Script's own email
+      // notification is the confirmation channel.
+      await fetch(formUrl, { method: "POST", mode: "no-cors", body });
+      window.location.href = "/booking-thanks";
+    } catch (err) {
+      console.error("Booking submission failed:", err);
+      showError(`Something went wrong sending your inquiry. Please email ${fallbackEmail} and we'll take it from there.`);
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send My Inquiry";
+      }
+    }
+  });
+</script>

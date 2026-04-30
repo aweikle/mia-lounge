@@ -10,8 +10,8 @@ export const site = {
   inceptionDate: "March 12, 2026",
 
   contact: {
-    email: "themiacollective1@gmail.com",
-    phone: "(443) 806-9547",
+    email: "themiacollectivellc@gmail.com",
+    phone: "(443) 806-9947",
     instagram: "themiacollective",
     facebookPage: "The MIA Collective LLC",
     facebookUrl:
