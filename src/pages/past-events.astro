@@ -1,6 +1,21 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { events } from "../data/events";
+
+// Eager-load all event photos so we can pick a cover for each event.
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/images/*/*.{jpg,jpeg,png,JPG,JPEG,PNG}",
+  { eager: true }
+);
+
+// For each event, pick the first photo (alphabetical) as the cover.
+const eventCovers = events.map((event) => {
+  const match = Object.entries(allImages)
+    .filter(([path]) => path.includes(`/src/images/${event.folder}/`))
+    .sort(([a], [b]) => a.localeCompare(b))[0];
+  return { event, cover: match?.[1].default };
+});
 ---
 
 <Layout title="Past Events" description="Photos and stories from past events Mia Snap Lounge has had the joy of capturing.">
@@ -13,48 +28,59 @@ import { events } from "../data/events";
       <div class="glow-divider mb-8"></div>
       <p class="text-lg text-cream-dim leading-relaxed max-w-2xl mx-auto">
         A peek at some of the celebrations we've had the joy of capturing.
-        Every booth tells a story — here are a few of our favorites.
+        Click any event to see the full gallery.
       </p>
     </div>
   </section>
 
   <section class="py-16">
     <div class="max-w-7xl mx-auto px-6 space-y-24">
-      {events.map((event, idx) => (
-        <article class="grid lg:grid-cols-12 gap-8 items-center">
-          <div class:list={[
-            "lg:col-span-7 relative aspect-[4/3] rounded-2xl overflow-hidden border border-ink-line",
-            idx % 2 === 1 && "lg:order-2"
-          ]}>
-            <img
-              src={event.cover}
-              alt={`Cover photo from ${event.title}`}
-              class="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-
-          <div class:list={[
-            "lg:col-span-5",
-            idx % 2 === 1 && "lg:order-1"
-          ]}>
-            <p class="section-eyebrow mb-3">{event.date}</p>
-            <h2 class="text-4xl rose-gradient-text mb-3">{event.title}</h2>
-            <p class="text-rose-300 text-sm mb-5" style="font-family: var(--font-display)">{event.venue}</p>
-            <p class="text-cream-dim leading-relaxed mb-6">{event.blurb}</p>
-
-            <div class="grid grid-cols-4 gap-2">
-              {event.photos.slice(0, 4).map((photo) => (
-                <div class="aspect-square rounded-md overflow-hidden border border-ink-line">
-                  <img
-                    src={photo}
-                    alt={`Moment from ${event.title}`}
-                    class="w-full h-full object-cover hover:scale-105 transition duration-500"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
+      {eventCovers.map(({ event, cover }, idx) => (
+        <article class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <a
+            href={`/events/${event.slug}`}
+            class:list={[
+              "lg:col-span-7 relative block aspect-[4/3] rounded-2xl overflow-hidden border border-ink-line hover:border-rose-400 transition group",
+              idx % 2 === 1 && "lg:order-2",
+            ]}
+            aria-label={`Open the ${event.title} gallery`}
+          >
+            {cover ? (
+              <Image
+                src={cover}
+                alt={`Cover photo from ${event.title}`}
+                widths={[800, 1200, 1600]}
+                sizes="(max-width: 1024px) 100vw, 60vw"
+                class="w-full h-full object-cover transition duration-700 group-hover:scale-[1.03]"
+                loading={idx === 0 ? "eager" : "lazy"}
+              />
+            ) : (
+              <div class="w-full h-full bg-ink-card flex items-center justify-center text-cream-dim text-sm">
+                Photos coming soon
+              </div>
+            )}
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition"></div>
+            <div class="absolute bottom-5 left-5 text-rose-200 text-xs uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition" style="font-family: var(--font-display)">
+              View Gallery →
             </div>
+          </a>
+
+          <div class:list={["lg:col-span-5", idx % 2 === 1 && "lg:order-1"]}>
+            <p class="section-eyebrow mb-3">{event.date}</p>
+            <h2 class="text-4xl rose-gradient-text mb-3">
+              <a href={`/events/${event.slug}`} class="hover:opacity-80 transition">
+                {event.title}
+              </a>
+            </h2>
+            {event.venue && (
+              <p class="text-rose-300 text-sm mb-5" style="font-family: var(--font-display)">
+                {event.venue}
+              </p>
+            )}
+            <p class="text-cream-dim leading-relaxed mb-6">{event.blurb}</p>
+            <a href={`/events/${event.slug}`} class="btn-ghost">
+              View Full Gallery
+            </a>
           </div>
         </article>
       ))}

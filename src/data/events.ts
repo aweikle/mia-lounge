@@ -1,67 +1,48 @@
-// PLACEHOLDER events — replace with real past events as photos are provided.
-// Each event renders as a section on /past-events with a photo grid.
+// Real past events for Mia Snap Lounge.
 //
-// HOW TO ADD A REAL EVENT (once Tenille sends photos):
-//   1) Drop photos into /public/images/events/<slug>/
-//      Recommended sizes:
-//        - cover.jpg → 1600×1200 (4:3) or larger
-//        - 01.jpg…04.jpg → 800×800 (square thumbnails)
-//   2) Update the matching entry below — change paths from
-//      "/images/placeholder.svg" to the real per-event paths, e.g.:
-//        cover: "/images/events/harbor-gala/cover.jpg",
-//        photos: ["/images/events/harbor-gala/01.jpg", ...]
+// Photos live in `src/images/<folder>/` and are processed by Astro at build
+// time (optimized, responsive variants generated automatically). To add a
+// new event:
+//   1) Create a folder at `src/images/<your-slug>/` with the event photos
+//      (.jpg / .jpeg / .png supported)
+//   2) Add an entry to the `events` array below with a matching `folder`
+//
+// The /past-events index uses the FIRST photo (alphabetically) from each
+// folder as the cover thumbnail. The full gallery lives at /events/<slug>.
 
 export interface Event {
   slug: string;
   title: string;
   date: string;
-  venue: string;
+  venue?: string;
   blurb: string;
-  cover: string;
-  photos: string[];
+  /** Folder name under src/images/ — must match the directory exactly. */
+  folder: string;
 }
-
-const placeholder = "/images/placeholder.svg";
 
 export const events: Event[] = [
   {
-    slug: "harbor-gala",
-    title: "The Harbor Gala",
-    date: "March 2026",
-    venue: "American Visionary Art Museum",
+    slug: "emani-wedding-2026",
+    title: "Emani Wedding",
+    date: "May 2026",
     blurb:
-      "A black-tie evening celebrating Baltimore artists, with rose gold accents and a custom monogram backdrop.",
-    cover: placeholder,
-    photos: [placeholder, placeholder, placeholder, placeholder],
+      "A celebration of love, family, and the start of a beautiful new chapter — captured one frame at a time.",
+    folder: "emani-wedding-2026",
   },
   {
-    slug: "johnson-wedding",
-    title: "The Johnson Wedding",
-    date: "October 2025",
-    venue: "The Belvedere",
+    slug: "hadassah-wedding-2026",
+    title: "Hadassah Wedding Reception",
+    date: "2026",
     blurb:
-      "Romance, florals, and a 200-guest dance floor that never quit. Our florals backdrop made every photo a portrait.",
-    cover: placeholder,
-    photos: [placeholder, placeholder, placeholder, placeholder],
+      "An evening of joy, dancing, and unforgettable moments shared between the newlyweds and their loved ones.",
+    folder: "hadassah-wedding-2026",
   },
   {
-    slug: "sweet-sixteen-amelia",
-    title: "Amelia's Sweet 16",
-    date: "August 2025",
-    venue: "Private residence, Towson",
+    slug: "nurse-week-2026",
+    title: "Nurse Week 2026",
+    date: "May 2026",
     blurb:
-      "A neon-meets-pink celebration with custom photo strips and enough boomerangs to fill her entire feed.",
-    cover: placeholder,
-    photos: [placeholder, placeholder, placeholder, placeholder],
-  },
-  {
-    slug: "corporate-launch-loft",
-    title: "Loft & Bough Launch Party",
-    date: "June 2025",
-    venue: "Sagamore Pendry, Fells Point",
-    blurb:
-      "Brand activation for a Baltimore lifestyle company — branded photo template, sequin backdrop, and a packed event.",
-    cover: placeholder,
-    photos: [placeholder, placeholder, placeholder, placeholder],
+      "Celebrating the nurses who carry our community every day — a special booth event honoring National Nurses Week.",
+    folder: "nurse-week-2026",
   },
 ];

@@ -1,0 +1,106 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import { events } from "../../data/events";
+
+export async function getStaticPaths() {
+  // Eager-glob every image in every src/images subfolder. Astro processes
+  // these at build time and gives us ImageMetadata objects with optimized
+  // variants. Globs MUST be string literals (not variables), so we load
+  // them all and group by folder.
+  const allImages = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/images/*/*.{jpg,jpeg,png,JPG,JPEG,PNG}",
+    { eager: true }
+  );
+
+  return events.map((event) => {
+    // Pull only this event's photos, sorted alphabetically by filename.
+    const photos = Object.entries(allImages)
+      .filter(([path]) => path.includes(`/src/images/${event.folder}/`))
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([path, mod]) => ({
+        src: mod.default,
+        filename: path.split("/").pop() ?? "",
+      }));
+
+    return {
+      params: { slug: event.slug },
+      props: { event, photos },
+    };
+  });
+}
+
+const { event, photos } = Astro.props;
+---
+
+<Layout
+  title={event.title}
+  description={`Photos from ${event.title} — captured by Mia Snap Lounge.`}
+>
+  <!-- HEADER -->
+  <section class="relative pt-40 pb-12 sparkle-bg">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <p class="section-eyebrow mb-4">
+        <a href="/past-events" class="hover:text-rose-200 transition">← All Events</a>
+      </p>
+      <h1 class="font-script rose-gradient-text text-5xl sm:text-6xl md:text-7xl mb-4" style="font-family: var(--font-script)">
+        {event.title}
+      </h1>
+      <p class="text-rose-300 text-sm uppercase tracking-[0.3em] mb-2" style="font-family: var(--font-display)">
+        {event.date}
+      </p>
+      {event.venue && (
+        <p class="text-cream-dim text-sm mb-6">{event.venue}</p>
+      )}
+      <div class="glow-divider mb-8"></div>
+      <p class="text-lg text-cream-dim leading-relaxed max-w-2xl mx-auto">
+        {event.blurb}
+      </p>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      {photos.length === 0 ? (
+        <p class="text-center text-cream-dim">
+          Photos coming soon — check back in a few days.
+        </p>
+      ) : (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {photos.map((photo, i) => (
+            <a
+              href={photo.src.src}
+              target="_blank"
+              rel="noreferrer"
+              class="group relative block aspect-square rounded-xl overflow-hidden border border-ink-line hover:border-rose-400 transition"
+              aria-label={`Open photo ${i + 1} of ${photos.length} full size`}
+            >
+              <Image
+                src={photo.src}
+                alt={`${event.title} — photo ${i + 1}`}
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+                loading={i < 3 ? "eager" : "lazy"}
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition" />
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-3xl sm:text-4xl rose-gradient-text mb-6">Love what you see?</h2>
+      <p class="text-cream-dim mb-8">Your event deserves the same care, styling, and joy.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/booking" class="btn-primary">Reserve Your Date</a>
+        <a href="/past-events" class="btn-ghost">More Events</a>
+      </div>
+    </div>
+  </section>
+</Layout>
