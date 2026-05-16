@@ -11,7 +11,7 @@ export const site = {
 
   contact: {
     email: "themiacollectivellc@gmail.com",
-    phone: "(443) 806-9947",
+    phone: "(443) 408-8437",
     instagram: "themiacollective",
     facebookPage: "The MIA Collective LLC",
     facebookUrl:
