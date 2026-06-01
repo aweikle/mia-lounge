@@ -45,4 +45,12 @@ export const events: Event[] = [
       "Celebrating the nurses who carry our community every day — a special booth event honoring National Nurses Week.",
     folder: "nurse-week-2026",
   },
+  {
+    slug: "death-to-my-20s",
+    title: "Death to My 20s",
+    date: "2026",
+    blurb:
+      "A dramatic, glamorous send-off to a decade — toasting the milestone birthday in true MIA Snap Lounge style.",
+    folder: "death-to-my-20s",
+  },
 ];
